@@ -36,12 +36,15 @@ def getmainmenuvalue():
             quit()  # Exit the loop and return None
         else:
             print("Invalid Input")
-    CreateRecipeBool = input(f"\n Do you want to add a recipe for {value} 1) Yes 2)No \n")
-    if CreateRecipeBool == "1":
+    while True:      
+      CreateRecipeBool = input(f"\n Do you want to add a recipe for {value} 1) Yes 2)No \n")
+      if CreateRecipeBool == "1":
         createrecipe(value)
-    elif CreateRecipeBool == "2":
+        break
+      elif CreateRecipeBool == "2":
         parserecipes(value)
-    else:
+        break
+      else:
         print("Invalid Input")
 #GETS THE MAIN VALUE AND PASSES IT TO PARSERECIPES
 
@@ -67,6 +70,7 @@ def main():
 #CHECKS IF MAIN AND INDIVIDUAL RECIPE EXISTS DISPLAYS IT THEN CALLS SUBMENU
 def parserecipes(value):
     if value is not None:
+      while True:
         with open(value, "r") as f:
             lines_list = []
             line_number = 0
@@ -75,16 +79,19 @@ def parserecipes(value):
                 print(f"{line_number}. {line.strip()}")
                 line_number += 1
             IndexFile = input("Please Enter the recipe Number that you are interested in\n")
-            index = int(IndexFile)
-            if index >= 0 and index <= line_number:
+            try:
+              index = int(IndexFile)
+              if index >= 0 and index <= line_number:
                 try:
                     with open(f"{lines_list[index]}", "r") as recipe_file:
                         file_contents = recipe_file.read()
                         print(file_contents)
                 except FileNotFoundError:
                     print("Recipe file not found.")
-            else:
+              else:
                 print("Invalid Option")
+            except ValueError:
+                    print("Invalid input. Please enter a valid number.")
     getsubmenuvalue(value)
 #CHECKS IF MAIN AND INDIVIDUAL RECIPE EXISTS DISPLAYS IT THEN CALLS SUBMENU
 
