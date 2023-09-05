@@ -4,9 +4,9 @@ def createrecipe(value):
         "\nPlease enter the exact name of the file you want to add. Make sure it is in the same directory as this program.\n"
     )
   with open(value, "a") as file:
-      file.write(RecipeType + "\n")
+      file.write("\n" + RecipeType)
 
-  getsubmenuvalue(value)
+  main()
 
 
 
@@ -86,6 +86,7 @@ def parserecipes(value):
                     with open(f"{lines_list[index]}", "r") as recipe_file:
                         file_contents = recipe_file.read()
                         print(file_contents)
+                        break
                 except FileNotFoundError:
                     print("Recipe file not found.")
               else:
@@ -95,6 +96,10 @@ def parserecipes(value):
     getsubmenuvalue(value)
 #CHECKS IF MAIN AND INDIVIDUAL RECIPE EXISTS DISPLAYS IT THEN CALLS SUBMENU
 
-
+def main():
+  getmainmenuvalue()
+  
+  
 if __name__ == "__main__":
     main()
+
