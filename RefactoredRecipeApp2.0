@@ -1,0 +1,93 @@
+#ADDS RECIPE TO DATABASE
+def createrecipe(value):
+  RecipeType = input(
+        "\nPlease enter the exact name of the file you want to add. Make sure it is in the same directory as this program.\n"
+    )
+  with open(value, "a") as file:
+      file.write(RecipeType + "\n")
+
+  getsubmenuvalue(value)
+
+
+
+#GETS THE MAIN VALUE AND PASSES IT TO PARSERECIPES
+def getmainmenuvalue():
+    while True:
+        mainmenu = input("\n1) What type of recipe are you interested in? 1)Breakfast 2)Lunch 3)Dinner 4)Snacks 5)Dessert 6)Drinks \n ")
+        if mainmenu == "1":
+            value = "Breakfast.txt"
+            break
+        elif mainmenu == "2":
+            value = "Lunch.txt"
+            break
+        elif mainmenu == "3":
+            value = "Dinner.txt"
+            break
+        elif mainmenu == "4":
+            value = "Snack.txt"
+            break
+        elif mainmenu == "5":
+            value = "Dessert.txt"
+            break
+        elif mainmenu == "6":
+            value = "Drink.txt"
+            break
+        elif mainmenu == "quit":
+            quit()  # Exit the loop and return None
+        else:
+            print("Invalid Input")
+    CreateRecipeBool = input(f"\n Do you want to add a recipe for {value} 1) Yes 2)No \n")
+    if CreateRecipeBool == "1":
+        createrecipe(value)
+    elif CreateRecipeBool == "2":
+        parserecipes(value)
+    else:
+        print("Invalid Input")
+#GETS THE MAIN VALUE AND PASSES IT TO PARSERECIPES
+
+#ROUTES TO CORRECT SUBMENU
+def getsubmenuvalue(value):
+    submenu = input("Type Corresponding number 1)Previous Menu, 2)Main Menu,3) Quit: ")
+    if submenu == "1":
+      parserecipes(value)
+    elif submenu == "2":
+      main()
+    elif submenu == "3":
+      quit()
+      return submenu
+    else:
+     print("Invalid answer")
+     getsubmenuvalue(value)
+#ROUTES TO CORRECT SUBMENU
+
+def main():
+    getmainmenuvalue()
+
+
+#CHECKS IF MAIN AND INDIVIDUAL RECIPE EXISTS DISPLAYS IT THEN CALLS SUBMENU
+def parserecipes(value):
+    if value is not None:
+        with open(value, "r") as f:
+            lines_list = []
+            line_number = 0
+            for line in f:
+                lines_list.append(line.strip())
+                print(f"{line_number}. {line.strip()}")
+                line_number += 1
+            IndexFile = input("Please Enter the recipe Number that you are interested in\n")
+            index = int(IndexFile)
+            if index >= 0 and index <= line_number:
+                try:
+                    with open(f"{lines_list[index]}", "r") as recipe_file:
+                        file_contents = recipe_file.read()
+                        print(file_contents)
+                except FileNotFoundError:
+                    print("Recipe file not found.")
+            else:
+                print("Invalid Option")
+    getsubmenuvalue(value)
+#CHECKS IF MAIN AND INDIVIDUAL RECIPE EXISTS DISPLAYS IT THEN CALLS SUBMENU
+
+
+if __name__ == "__main__":
+    main()
